@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .btn {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 8px 14px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>空氣品質</h1>
+    <div>
+    <table>
+        <thead>
+            <tr>
+                
+                <th>城市</th>
+                <th>監測站</th>
+                <th>aqi</th>
+                <th>status</th>
+                <th>btn</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for index ,row in aqi_records_num %}
+                <tr>
+                    
+                    <td>{{ row.county }}</td>
+                    <td>{{ row.sitename }}</td>
+                    <td>{{ row.aqi }}</td>
+                    <td>{{ row.status }}</td>
+                    <td><button class="btn"  onclick="sendNumber('{{ row.index }}')">按鈕</button></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<form id="numberForm" action="/send_number" method="post" style="display: none;">
+    <input type="hidden" id="numberInput" name="number">
+</form>
+<script>
+    function sendNumber(number) {
+        document.getElementById("numberInput").value = number;
+        document.getElementById("numberForm").submit();
+    }
+</script>
+</body>
+</html>
